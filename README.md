@@ -1,85 +1,150 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# CourseHunter Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Описание
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+CourseHunter — это платформа, предоставляющая доступ к образовательным материалам по программированию и разработке программного обеспечения. Основной акцент сайта сделан на платные курсы и видеоматериалы от ведущих онлайн-школ и преподавателей, связанных с IT-сферой. Этот проект является моей дипломной работой в университете.
 
-## Description
+## Стек технологий
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Node.js**: Среда выполнения JavaScript.
+- **Nest.js**: Фреймворк для разработки серверных приложений с поддержкой модульной архитектуры.
+- **Prisma ORM**: ORM для работы с базой данных PostgreSQL.
+- **PostgreSQL**: Реляционная база данных для хранения информации о пользователях, курсах, заданиях и т.д.
+- **Docker**: Для контейнеризации приложения и базы данных.
+- **JWT**: Аутентификация на основе токенов.
+- **TypeScript**: Язык разработки для улучшенной типизации и безопасности кода.
 
-## Project setup
+## Ключевые характеристики
+
+1. **Аутентификация и авторизация**:
+
+   - Регистрация, логин и разлогин пользователей.
+   - Использование JWT для защиты маршрутов и данных.
+   - Поддержка ролевой системы (Администратор, Студент).
+
+2. **Каталог курсов**:
+   - Широкий выбор курсов по программированию, веб-технологиям, базам данных, DevOps и другим IT-направлениям.
+3. **Платный доступ**:
+
+   - Необходима подписка для получения доступа к скачиванию и просмотру курсов.
+
+4. **Фильтрация и поиск**:
+
+   - Возможность поиска курсов по категориям, языкам программирования, уровню сложности, длительности и другим параметрам.
+
+
+5. **Обновление контента**:
+
+   - Регулярное добавление новых курсов и обновления существующих.
+
+6. **Видео и материалы**:
+   - Курсы содержат видеоуроки и дополнительные материалы.
+
+## Админ-панель
+
+Сайт **CourseHunter** включает функциональную **админ-панель** для управления контентом и пользователями. Админ-панель позволяет:
+
+1. **Управление курсами**:
+
+   - Добавление, редактирование и удаление курсов.
+   - Управление категориями и тегами для фильтрации.
+   - Загрузка и управление видео и материалами курсов.
+
+2. **Управление пользователями**:
+
+   - Создание и управление учетными записями пользователей.
+   - Контроль подписок и прав доступа.
+
+3. **Управление платежами**:
+
+   - Отслеживание транзакций.
+   - Управление скидками, промокодами и ценами на курсы.
+
+4. **Аналитика**:
+   - Статистика по курсам (количество просмотров, завершенные курсы).
+   - Статистика по пользователям (новые подписки, активные пользователи).
+   - Аналитика доходов и активностей на платформе.
+
+## Установка и запуск
+
+### Предварительные требования
+
+- **Node.js** версии 16.x или выше.
+- **Docker** для работы с контейнерами.
+- **PostgreSQL** (может быть запущена через Docker).
+
+### Шаги установки
+
+1. Клонируйте репозиторий:
+
+   ```bash
+   git clone https://github.com/alisher134/coursehunter-backend.git
+   ```
+
+2. Установите зависимости:
 
 ```bash
-$ yarn install
+npm install
 ```
 
-## Compile and run the project
+3. Настройте переменные окружения. Создайте файл .env на основе примера .env.example:
+   Пример содержания файла .env:
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+DATABASE_URL=postgresql://user:password@localhost:5432/your_db
+JWT_SECRET=your_jwt_secret_key
 ```
 
-## Run tests
+4. Запустите PostgreSQL с помощью Docker (если у вас не установлен локально Postgres):
 
 ```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+docker-compose up -d
 ```
 
-## Resources
+5. Примените миграции Prisma для создания таблиц в базе данных:
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+npx prisma migrate dev --name migration_name
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+6. Запустите приложение:
 
-## Support
+```bash
+npm run start:dev
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Backend будет доступен по адресу http://localhost:4000.
 
-## Stay in touch
+## Docker
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Для запуска приложения с использованием Docker, выполните следующие команды:
 
-## License
+1. Соберите Docker образы:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+   ```bash
+   docker-compose build
+   ```
+
+2. Запустите контейнеры:
+
+```bash
+docker-compose up -d
+```
+
+## Swagger
+
+API документация доступно по адресу http://localhost:4000/api
+
+## Contributing
+
+1. Форкните репозиторий.
+2. Создайте новую ветку для ваших изменений.
+3. Внесите необходимые изменения и зафиксируйте их.
+4. Откройте pull request.
+
+## Контактная информация
+
+Если у вас есть вопросы или предложения, пожалуйста, свяжитесь со мной:
+
+- **Email**: alisherrakhmanov134@gmail.com
+- **Telegram**: [alisherr134](https://t.me/alisherr134)

@@ -1,0 +1,8 @@
+dist
+node_modules
+README.md
+build
+*.lock
+*.log
+*.test.ts
+*.spec.ts
