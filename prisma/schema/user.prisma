@@ -1,0 +1,22 @@
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  email    String @unique
+  password String
+
+  username           String
+  avatarPath         String  @map("avatar_path")
+  isVerified         Boolean @default(false) @map("is_verified")
+  isTwoFactorEnabled Boolean @default(false) @map("is_two_factor_enabled")
+
+  role EnumRoles @default(USER)
+
+  @@map("user")
+}
+
+enum EnumRoles {
+  USER
+  ADMIN
+}
