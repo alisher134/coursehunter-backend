@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
+import { I18nValidationExceptionFilter } from 'nestjs-i18n';
 import { AppModule } from './modules/app.module';
 
 async function bootstrap(): Promise<void> {
@@ -20,6 +21,11 @@ async function bootstrap(): Promise<void> {
 
 	app.use(cookieParser());
 	app.useGlobalPipes(new ValidationPipe());
+	app.useGlobalFilters(
+		new I18nValidationExceptionFilter({
+			detailedErrors: false
+		})
+	);
 	app.setGlobalPrefix('api/v1');
 	app.enableCors({
 		origin: config.getOrThrow<string>('ALLOWED_ORIGIN'),

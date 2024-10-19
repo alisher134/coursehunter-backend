@@ -1,0 +1,11 @@
+{
+	"auth": {
+		"validate": "Invalid email or password!",
+		"isExists": "User with this email is already in use!",
+		"logIn": "Please log in!",
+		"invalidRefresh": "Invalid refresh token!"
+	},
+	"user": {
+		"notFound": "User not found!"
+	}
+}

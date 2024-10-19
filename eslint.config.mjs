@@ -25,7 +25,6 @@ export default tseslint.config(
 			'@typescript-eslint/no-unused-vars': 'warn',
 			'@typescript-eslint/explicit-module-boundary-types': 'off',
 			'@typescript-eslint/no-explicit-any': 'error',
-			'max-classes-per-file': ['error', 1],
 			'@typescript-eslint/explicit-function-return-type': 'warn',
 			'import/prefer-default-export': 'off',
 			'prettier/prettier': [
