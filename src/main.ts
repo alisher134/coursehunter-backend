@@ -14,7 +14,8 @@ async function bootstrap(): Promise<void> {
 		.setDescription('The CurseHunter API description')
 		.setVersion('1.0')
 		.build();
-	const documentFactory = (): OpenAPIObject => SwaggerModule.createDocument(app, options);
+	const documentFactory = (): OpenAPIObject =>
+		SwaggerModule.createDocument(app, options);
 	SwaggerModule.setup('api', app, documentFactory);
 
 	app.use(cookieParser());
