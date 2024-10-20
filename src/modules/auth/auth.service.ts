@@ -3,7 +3,7 @@ import {
 	Injectable,
 	UnauthorizedException
 } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { EnumToken, User } from '@prisma/client';
 import { verify } from 'argon2';
 import { I18nService } from 'nestjs-i18n';
 import { MailService } from '../mail/mail.service';
@@ -26,6 +26,18 @@ export class AuthService {
 	async register(dto: RegisterDto): Promise<AuthResponse> {
 		await this.checkExists(dto.email);
 		const user = await this.userService.create(dto);
+
+		const emailToken = await this.tokenService.generateToken(
+			dto.email,
+			EnumToken.VERIFICATION,
+			'1d'
+		);
+
+		await this.mailService.sendVerificationEmail(
+			dto.email,
+			dto.username,
+			emailToken.token
+		);
 
 		this.mailService.sendWelcome(dto.email, dto.username);
 
@@ -72,7 +84,10 @@ export class AuthService {
 	}
 
 	private async buildResponse(user: User): Promise<AuthResponse> {
-		const tokens = await this.tokenService.generateTokens(user.id, user.role);
+		const tokens = await this.tokenService.generateAuthTokens(
+			user.id,
+			user.role
+		);
 
 		return {
 			user: {

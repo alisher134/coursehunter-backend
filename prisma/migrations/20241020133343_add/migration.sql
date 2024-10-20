@@ -7,7 +7,7 @@ CREATE TABLE "token" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "email" TEXT NOT NULL,
     "token" TEXT NOT NULL,
-    "expires_in" TIMESTAMP(3) NOT NULL,
+    "expires_in" TEXT NOT NULL,
     "type" "EnumToken" NOT NULL,
 
     CONSTRAINT "token_pkey" PRIMARY KEY ("id")

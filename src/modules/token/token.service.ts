@@ -23,7 +23,10 @@ export class TokenService {
 		);
 	}
 
-	async generateTokens(userId: string, role: EnumRoles): Promise<AuthTokens> {
+	async generateAuthTokens(
+		userId: string,
+		role: EnumRoles
+	): Promise<AuthTokens> {
 		const payload: JwtPayload = { id: userId, role };
 
 		const accessToken = await this.jwtService.signAsync(payload, {
@@ -39,18 +42,18 @@ export class TokenService {
 
 	async generateToken(
 		email: string,
-		expiresIn: string,
-		type: EnumToken
+		type: EnumToken,
+		expiresIn: string
 	): Promise<Token> {
-		const existToken = await this.prismaService.token.findFirst({
-			where: { email, type }
-		});
+		// const existToken = await this.prismaService.token.findFirst({
+		// 	where: { email, type }
+		// });
 
-		if (existToken) {
-			await this.prismaService.token.delete({
-				where: { id: existToken.id, type }
-			});
-		}
+		// if (existToken) {
+		// 	await this.prismaService.token.delete({
+		// 		where: { id: existToken.id, type }
+		// 	});
+		// }
 
 		const tokenData: Prisma.TokenCreateInput = {
 			token: await this.jwtService.signAsync({ email }, { expiresIn }),

@@ -2,9 +2,11 @@ import { EnumLang } from '@/common';
 import {
 	Body,
 	Controller,
+	Get,
 	HttpCode,
 	HttpStatus,
 	Post,
+	Query,
 	Req,
 	Res
 } from '@nestjs/common';
@@ -14,14 +16,16 @@ import { AuthResponse } from './auth.response';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { RefreshTokenService } from './refresh-token.service';
+import { EmailVerificationService } from './email-verification/email-verification.service';
+import { RefreshTokenService } from './refresh-token/refresh-token.service';
 
 @ApiTags('AUTH')
 @Controller('auth')
 export class AuthController {
 	constructor(
 		private readonly authService: AuthService,
-		private readonly refreshTokenService: RefreshTokenService
+		private readonly refreshTokenService: RefreshTokenService,
+		private readonly emailVerificationService: EmailVerificationService
 	) {}
 
 	@ApiParam({ name: 'lang', enum: EnumLang })
@@ -83,5 +87,11 @@ export class AuthController {
 		this.refreshTokenService.removeRefreshTokenFromResponse(res);
 
 		return true;
+	}
+
+	@Get('verification')
+	@HttpCode(HttpStatus.OK)
+	verification(@Query('token') token: string): Promise<{ message: string }> {
+		return this.emailVerificationService.verificationEmail(token);
 	}
 }

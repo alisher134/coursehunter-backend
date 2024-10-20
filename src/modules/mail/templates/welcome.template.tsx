@@ -1,4 +1,4 @@
-import { API_NAME, CLIENT_URL } from '@/common/constants';
+import { API_NAME } from '@/common/constants';
 import { Body, Heading, Hr, Link, Text } from '@react-email/components';
 
 import { Html } from '@react-email/html';
@@ -8,10 +8,15 @@ import * as React from 'react';
 
 interface WelcomeTemplateProps {
 	username: string;
+	link: string;
 	t: (key: string, options?: TranslateOptions) => string;
 }
 
-export const WelcomeTemplate = ({ username, t }: WelcomeTemplateProps) => {
+export const WelcomeTemplate = ({
+	username,
+	link,
+	t
+}: WelcomeTemplateProps) => {
 	return (
 		<Tailwind>
 			<Html>
@@ -31,7 +36,7 @@ export const WelcomeTemplate = ({ username, t }: WelcomeTemplateProps) => {
 							{t('translations.welcome.anyQuestions')}
 						</Text>
 						<Link
-							href={CLIENT_URL}
+							href={link}
 							className="inline-block bg-sky-700 text-white py-2 px-4 rounded mt-2"
 						>
 							{t('translations.welcome.switch', { args: { API_NAME } })}
@@ -39,7 +44,7 @@ export const WelcomeTemplate = ({ username, t }: WelcomeTemplateProps) => {
 					</div>
 					<Hr className="my-4" />
 					<Text className="mt-2">
-						{t('translations.welcome.anyQuestions')},
+						{t('translations.welcome.sincerely')},
 						<br />
 						{API_NAME} 👩‍💻👨‍💻
 					</Text>

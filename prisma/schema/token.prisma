@@ -3,8 +3,8 @@ model Token {
     createdAt DateTime @default(now()) @map("created_at")
 
     email     String
-    token     String   @unique
-    expiresIn DateTime @updatedAt @map("expires_in")
+    token     String @unique
+    expiresIn String @map("expires_in")
 
     type EnumToken
 
