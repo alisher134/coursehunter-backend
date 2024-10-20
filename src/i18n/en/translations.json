@@ -1,4 +1,12 @@
 {
+	"welcome": {
+		"hello": "Hello",
+		"thanks": "Thank you for registering on the educational platform {API_NAME} 🎉",
+		"firstStep": "You have taken the first step towards new knowledge and skills in the IT field. 🚀",
+		"anyQuestions": "If you have any questions, do not hesitate to contact us. We are always ready to help you on your way to learning! 🤗",
+		"switch": "Go to {API_NAME}",
+		"sincerely": "Sincerely yours"
+	},
 	"auth": {
 		"validate": "Invalid email or password!",
 		"isExists": "User with this email is already in use!",

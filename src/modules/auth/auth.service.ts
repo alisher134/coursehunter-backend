@@ -6,6 +6,7 @@ import {
 import { User } from '@prisma/client';
 import { verify } from 'argon2';
 import { I18nService } from 'nestjs-i18n';
+import { MailService } from '../mail/mail.service';
 import { TokenService } from '../token/token.service';
 import { UserDetail } from '../user/user.response';
 import { UserService } from '../user/user.service';
@@ -18,12 +19,15 @@ export class AuthService {
 	constructor(
 		private readonly userService: UserService,
 		private readonly tokenService: TokenService,
+		private readonly mailService: MailService,
 		private readonly i18n: I18nService
 	) {}
 
 	async register(dto: RegisterDto): Promise<AuthResponse> {
 		await this.checkExists(dto.email);
 		const user = await this.userService.create(dto);
+
+		this.mailService.sendWelcome(dto.email, dto.username);
 
 		return await this.buildResponse(user);
 	}

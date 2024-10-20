@@ -6,7 +6,7 @@ export interface JwtPayload {
 	role: EnumRoles;
 }
 
-export class Tokens {
+export class AuthTokens {
 	@ApiProperty()
 	accessToken: string;
 

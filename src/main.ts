@@ -28,7 +28,7 @@ async function bootstrap(): Promise<void> {
 	);
 	app.setGlobalPrefix('api/v1');
 	app.enableCors({
-		origin: config.getOrThrow<string>('ALLOWED_ORIGIN'),
+		origin: config.getOrThrow<string>('CLIENT_URL'),
 		credentials: true,
 		exposedHeaders: ['set-cookie']
 	});

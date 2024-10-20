@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { EnumRoles } from '@prisma/client';
-import { Tokens } from '../token/token.response';
+import { AuthTokens } from '../token/token.response';
 
 export class AuthUser {
 	@ApiProperty()
@@ -16,7 +16,7 @@ export class AuthUser {
 	role: EnumRoles;
 }
 
-export class AuthResponse extends Tokens {
+export class AuthResponse extends AuthTokens {
 	@ApiProperty()
 	user: AuthUser;
 }
