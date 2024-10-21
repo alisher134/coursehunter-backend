@@ -1,4 +1,3 @@
-import { API_NAME } from '@/common/constants';
 import { isProd } from '@/common/utils/is-prod.utils';
 import { MailerOptions } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
@@ -14,8 +13,5 @@ export const mailConfig = async (
 			user: configService.get('SMTP_LOGIN'),
 			pass: configService.get('SMTP_PASSWORD')
 		}
-	},
-	defaults: {
-		from: `${API_NAME} ${configService.get('MAIL_LOGIN')}`
 	}
 });

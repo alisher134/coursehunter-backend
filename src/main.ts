@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, OpenAPIObject, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import { I18nValidationExceptionFilter } from 'nestjs-i18n';
+import { API_NAME } from './common/constants';
 import { AppModule } from './modules/app.module';
 
 async function bootstrap(): Promise<void> {
@@ -11,8 +12,8 @@ async function bootstrap(): Promise<void> {
 	const config = app.get(ConfigService);
 
 	const options = new DocumentBuilder()
-		.setTitle('CurseHunter')
-		.setDescription('The CurseHunter API description')
+		.setTitle(API_NAME)
+		.setDescription(`The ${API_NAME} API description`)
 		.setVersion('1.0')
 		.build();
 	const documentFactory = (): OpenAPIObject =>

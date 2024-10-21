@@ -1,8 +1,9 @@
 import { EnumLang } from '@/common';
+import { Auth } from '@/decorators/auth.decorator';
+import { CurrentUser } from '@/decorators/user.decorator';
 import {
 	Body,
 	Controller,
-	Get,
 	HttpCode,
 	HttpStatus,
 	Post,
@@ -17,6 +18,8 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { EmailVerificationService } from './email-verification/email-verification.service';
+import { PasswordResetDto } from './password-reset/dto/password-reset.dto';
+import { PasswordResetService } from './password-reset/password-reset.service';
 import { RefreshTokenService } from './refresh-token/refresh-token.service';
 
 @ApiTags('AUTH')
@@ -25,7 +28,8 @@ export class AuthController {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly refreshTokenService: RefreshTokenService,
-		private readonly emailVerificationService: EmailVerificationService
+		private readonly emailVerificationService: EmailVerificationService,
+		private readonly passwordResetService: PasswordResetService
 	) {}
 
 	@ApiParam({ name: 'lang', enum: EnumLang })
@@ -89,9 +93,29 @@ export class AuthController {
 		return true;
 	}
 
-	@Get('verification')
+	@ApiParam({ name: 'lang', enum: EnumLang })
+	@Post('verification')
 	@HttpCode(HttpStatus.OK)
 	verification(@Query('token') token: string): Promise<{ message: string }> {
 		return this.emailVerificationService.verificationEmail(token);
+	}
+
+	@ApiParam({ name: 'lang', enum: EnumLang })
+	@Auth()
+	@Post('password-reset')
+	@HttpCode(HttpStatus.OK)
+	passwordReset(@CurrentUser('email') email: string): Promise<boolean> {
+		return this.passwordResetService.reset(email);
+	}
+
+	@ApiParam({ name: 'lang', enum: EnumLang })
+	@ApiBody({ type: PasswordResetDto })
+	@Post('new-password')
+	@HttpCode(HttpStatus.OK)
+	newPassword(
+		@Body() dto: PasswordResetDto,
+		@Query('token') token: string
+	): Promise<{ message: string }> {
+		return this.passwordResetService.newPasswordReset(token, dto);
 	}
 }

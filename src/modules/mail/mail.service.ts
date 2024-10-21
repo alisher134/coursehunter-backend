@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { render } from '@react-email/components';
 import { I18nService, TranslateOptions } from 'nestjs-i18n';
 import { EmailVerification } from './templates/email-verification.template';
+import { ResetPasswordTemplate } from './templates/password-reset.template';
 import { WelcomeTemplate } from './templates/welcome.template';
 
 @Injectable()
@@ -31,12 +32,29 @@ export class MailService {
 		);
 	}
 
+	async sendPasswordReset(email: string, token: string): Promise<void> {
+		const domain = this.configService.get('CLIENT_URL');
+		const html = await render(
+			ResetPasswordTemplate({
+				domain,
+				token,
+				t: (key: string, options: TranslateOptions) => this.i18n.t(key, options)
+			})
+		);
+
+		return this.sendEmail(
+			email,
+			this.i18n.t('translations.passwordReset.heading'),
+			html
+		);
+	}
+
 	async sendVerificationEmail(
 		email: string,
 		username: string,
 		token: string
 	): Promise<void> {
-		const domain = this.configService.get('APP_URL');
+		const domain = this.configService.get('CLIENT_URL');
 		const html = await render(
 			EmailVerification({
 				domain,
@@ -53,8 +71,14 @@ export class MailService {
 		);
 	}
 
-	sendEmail(to: string, subject: string, html: string): Promise<void> {
+	sendEmail(
+		to: string,
+		subject: string,
+		html: string,
+		from: string = 'coursehunter@help.kz'
+	): Promise<void> {
 		return this.mailerService.sendMail({
+			from,
 			to,
 			subject,
 			html

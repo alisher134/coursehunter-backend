@@ -1,11 +1,17 @@
 import { faker } from '@faker-js/faker';
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException
+} from '@nestjs/common';
+import { EnumRoles, Prisma } from '@prisma/client';
 import { hash } from 'argon2';
 import { I18nService } from 'nestjs-i18n';
 import { RegisterDto } from '../auth/dto/register.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDetail } from './user.response';
+import { UserSelect } from './user.select';
 
 @Injectable()
 export class UserService {
@@ -15,7 +21,10 @@ export class UserService {
 	) {}
 
 	async findById(id: string): Promise<UserDetail | undefined> {
-		const user = await this.prismaService.user.findUnique({ where: { id } });
+		const user = await this.prismaService.user.findUnique({
+			where: { id },
+			select: UserSelect
+		});
 
 		if (!user)
 			throw new NotFoundException(this.i18n.t('translations.user.notFound'));
@@ -25,6 +34,28 @@ export class UserService {
 
 	async findByEmail(email: string): Promise<UserDetail | undefined> {
 		return await this.prismaService.user.findUnique({ where: { email } });
+	}
+
+	async update(id: string, dto: UpdateUserDto): Promise<UserDetail> {
+		const user = await this.findById(id);
+		const isSameUser = await this.findByEmail(dto.email);
+
+		if (isSameUser && id !== isSameUser.id)
+			throw new BadRequestException(this.i18n.t('translations.auth.isExists'));
+
+		return await this.prismaService.user.update({
+			where: {
+				email: dto.email
+			},
+			select: UserSelect,
+			data: {
+				...dto,
+				password: dto.password
+					? await this.hashedPassword(dto.password)
+					: user.password,
+				role: dto.role ? dto.role : EnumRoles.USER
+			}
+		});
 	}
 
 	async create(dto: RegisterDto): Promise<UserDetail> {
